@@ -21,6 +21,8 @@
       SERVICE wikibase:label { bd:serviceParam wikibase:language "el,en". }
     }
     ```
+    [Link to wikidata query](https://query.wikidata.org/#SELECT%20DISTINCT%20%3Fitem%20%3FitemLabel%20%28COUNT%28%3Fperson%29%20AS%20%3Fcount%29%0AWHERE%20%7B%0A%20%20%3Fitem%20wdt%3AP31%20wd%3AQ3918%20.%20%23%20instance%20of%20university%0A%20%20%3Fitem%20wdt%3AP17%20wd%3AQ41%20.%20%23%20country%20Greece%0A%20%20OPTIONAL%7B%3Fitem%20wdt%3AP159%20%3FheadquartersLocation%20.%7D%20%23%20optional%20headquarters%20location%0A%20%20OPTIONAL%7B%0A%20%20%20%20%3Fperson%20wdt%3AP69%20%3Fitem%20.%20%23%20person%20educated%20at%20university%0A%20%20%20%20%3Fperson%20wdt%3AP27%20wd%3AQ41%20.%20%23%20person%20is%20greek%0A%20%20%20%20%3Fperson%20wdt%3AP106%20wd%3AQ36180%20%23%20person%20is%20writter%20%0A%20%20%7D%0A%20%20SERVICE%20wikibase%3Alabel%20%7B%20bd%3AserviceParam%20wikibase%3Alanguage%20%22el%2Cen%22.%20%7D%0A%7D%20GROUP%20BY%20%3Fitem%20%3FitemLabel%20ORDER%20BY%20DESC%28%3Fcount%29)
+
   * Find all the Greek universities known to Wikidata. Output their name, the city that they are located in and the number of Greek authors that have graduated from them (order answers by this number).
   ```SQL  
   SELECT DISTINCT ?item ?itemLabel (COUNT(?person) AS ?count)
@@ -36,3 +38,4 @@
     SERVICE wikibase:label { bd:serviceParam wikibase:language "el,en". }
   } GROUP BY ?item ?itemLabel ORDER BY DESC(?count)
   ```
+  [Link to wikidata query](https://query.wikidata.org/#SELECT%20%3Fitem%20%3FitemLabel%20%3FpoliticalPartyLabel%20%3FeducatedAtLabel%0AWHERE%20%7B%0A%20%20%3Fitem%20wdt%3AP27%20wd%3AQ41%20.%0A%20%20%3Fitem%20wdt%3AP39%20wd%3AQ4377230%20.%0A%20%20OPTIONAL%7B%3Fitem%20wdt%3AP102%20%3FpoliticalParty%20.%7D%0A%20%20OPTIONAL%7B%0A%20%20%20%20%3Fitem%20wdt%3AP69%20%3FeducatedAt%20.%0A%20%20%20%20%3FeducatedAt%20wdt%3AP31%20%3Ftype%20FILTER%28%3Ftype%20%3D%20wd%3AQ3918%29.%0A%20%20%7D%0A%20%20SERVICE%20wikibase%3Alabel%20%7B%20bd%3AserviceParam%20wikibase%3Alanguage%20%22el%2Cen%22.%20%7D%0A%7D)
