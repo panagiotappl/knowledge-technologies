@@ -68,14 +68,22 @@ public class TestData {
 			try {
 				RepositoryConnection con = repo.getConnection();
 				try {
-					String queryString1 = "prefix ns:   <http://zoi.gr/culture#> PREFIX gag: <http://geo.linkedopendata.gr/gag/ontology/>" +
-			        " SELECT ?x ?y " +
-			        " WHERE { ?m rdf:type gag:Δήμος . } ";
+					String queryString1 = "PREFIX gag: <http://geo.linkedopendata.gr/gag/ontology/>" +
+			        " SELECT ?official_name ?population" +
+			        " WHERE { ?x rdf:type gag:Δήμος . " +
+			        "         ?x gag:έχει_επίσημο_όνομα ?official_name . " +
+			        "         ?x gag:έχει_πληθυσμό ?population . }";
+					
 	        
-			        String queryString2 = "prefix ns:   <http://zoi.gr/culture#>" +
-			        " SELECT ?x ?y " +
-			        " WHERE { ?x  ns:paints  ?y . " +
-			        "   ?y ns:exhibited <http://www.louvre.fr/> .} ";
+			        String queryString2 = "PREFIX gag: <http://geo.linkedopendata.gr/gag/ontology/>" +
+					" SELECT ?x ?official_name ?official_regional_unit_name ?official_municipality_unit_name" +
+					" WHERE { ?x rdf:type gag:Δήμος . " +
+					"         ?x gag:έχει_επίσημο_όνομα ?official_name . " +
+					"         ?x gag:ανήκει_σε ?regional_unit . " +
+					"         ?regional_unit gag:έχει_επίσημο_όνομα ?official_regional_unit_name . " +
+					"         ?municipality_unit gag:ανήκει_σε ?x . " +
+					"         ?municipality_unit gag:έχει_επίσημο_όνομα ?official_municipality_unit_name . }" + 
+					" ORDER BY ?x";
 			        
 			        String queryString3 = "prefix ns:   <http://zoi.gr/culture#>" +
 			        " SELECT ?x " +
