@@ -90,27 +90,29 @@ public class TestData {
 							+ "         FILTER(?population < 5000) "
 							+ "         ?municipality gag:έχει_επίσημο_όνομα ?official_municipality_name .}";
 
-					String queryString3b = "prefix ns:   <http://zoi.gr/culture#>" + " SELECT ?y "
-							+ " WHERE { ?x  ns:first_name  \"August\" ." + "	?x ns:last_name ?y . } ";
-
-					String queryString4 = "prefix ns:   <http://zoi.gr/culture#>" + " SELECT ?x ?y "
-							+ " WHERE { ?x  ns:first_name  ?y" + " FILTER regex(str(?x), \"rodin\") } ";
+					String queryString4 = "PREFIX gag: <http://geo.linkedopendata.gr/gag/ontology/> "
+							+ " SELECT ?official_municipality_name"
+							+ " WHERE { ?region rdf:type gag:Περιφέρεια . "
+							+ "         ?region gag:έχει_επίσημο_όνομα \"ΠΕΡΙΦΕΡΕΙΑ ΚΡΗΤΗΣ\" . "
+							+ "         ?regional_unit gag:ανήκει_σε ?region . "
+							+ "         ?municipality gag:ανήκει_σε ?regional_unit . "
+							+ "         FILTER NOT EXISTS { ?municipality gag:έχει_έδρα ?seat . } "
+							+ "         ?municipality gag:έχει_επίσημο_όνομα ?official_municipality_name .}";
 
 					String queryString5 = "prefix ns:   <http://zoi.gr/culture#>" + " SELECT ?x ?y "
+							+ " WHERE { ?x  ns:first_name  ?y" + " FILTER regex(str(?x), \"rodin\") } ";
+
+					String queryString6 = "prefix ns:   <http://zoi.gr/culture#>" + " SELECT ?x ?y "
 							+ " WHERE { ?x  ns:created  ?y " + " FILTER (?y < 1990) } ";
 
-					String queryString6 = "prefix ns:   <http://zoi.gr/culture#>" + " SELECT ?x ?z ?w "
+					String queryString7 = "prefix ns:   <http://zoi.gr/culture#>" + " SELECT ?x ?z ?w "
 							+ " WHERE { ?x   ns:paints  ?y ." + " OPTIONAL {?x ns:first_name ?z ."
 							+ "			?x ns:last_name ?w}} ";
 
-					String queryString7 = "prefix ns:   <http://zoi.gr/culture#>" + " SELECT ?x ?y "
+					String queryString8 = "prefix ns:   <http://zoi.gr/culture#>" + " SELECT ?x ?y "
 							+ " WHERE { {?x  ns:sculpts  ?y }" + " UNION {?x ns:paints ?y} } ";
 
-					String queryrrrr = "prefix ns:   <http://cgi.di.uoa.gr/~ys02/rdf/schema-2.rdf#>"
-							+ " PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>" + " SELECT ?x "
-							+ " WHERE { ?x  rdf:type  ns:Class0 }";
-
-					String queryString = queryString3;
+					String queryString = queryString4;
 					TupleQuery tupleQuery = con.prepareTupleQuery(QueryLanguage.SPARQL, queryString);
 					TupleQueryResult result = tupleQuery.evaluate();
 					System.out.println("Query:\n" + queryString);
