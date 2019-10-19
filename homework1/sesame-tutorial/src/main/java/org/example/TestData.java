@@ -91,28 +91,61 @@ public class TestData {
 							+ "         ?municipality gag:έχει_επίσημο_όνομα ?official_municipality_name .}";
 
 					String queryString4 = "PREFIX gag: <http://geo.linkedopendata.gr/gag/ontology/> "
-							+ " SELECT ?official_municipality_name"
-							+ " WHERE { ?region rdf:type gag:Περιφέρεια . "
+							+ " SELECT ?official_municipality_name" + " WHERE { ?region rdf:type gag:Περιφέρεια . "
 							+ "         ?region gag:έχει_επίσημο_όνομα \"ΠΕΡΙΦΕΡΕΙΑ ΚΡΗΤΗΣ\" . "
 							+ "         ?regional_unit gag:ανήκει_σε ?region . "
 							+ "         ?municipality gag:ανήκει_σε ?regional_unit . "
 							+ "         FILTER NOT EXISTS { ?municipality gag:έχει_έδρα ?seat . } "
 							+ "         ?municipality gag:έχει_επίσημο_όνομα ?official_municipality_name .}";
 
-					String queryString5 = "prefix ns:   <http://zoi.gr/culture#>" + " SELECT ?x ?y "
-							+ " WHERE { ?x  ns:first_name  ?y" + " FILTER regex(str(?x), \"rodin\") } ";
+					String queryString5 = "PREFIX gag: <http://geo.linkedopendata.gr/gag/ontology/> "
+							+ " SELECT ?official_municipality_name ?official_unit_name"
+							+ " WHERE { ?region rdf:type gag:Περιφέρεια . "
+							+ "         ?region gag:έχει_επίσημο_όνομα \"ΠΕΡΙΦΕΡΕΙΑ ΚΡΗΤΗΣ\" . "
+							+ "         ?regional_unit gag:ανήκει_σε ?region . "
+							+ "         ?municipality gag:ανήκει_σε ?regional_unit . "
+							+ "         ?municipality gag:έχει_επίσημο_όνομα ?official_municipality_name . "
+							+ "         ?municipality gag:ανήκει_σε+ ?unit . "
+							+ "         ?unit gag:έχει_επίσημο_όνομα ?official_unit_name . }";
 
-					String queryString6 = "prefix ns:   <http://zoi.gr/culture#>" + " SELECT ?x ?y "
-							+ " WHERE { ?x  ns:created  ?y " + " FILTER (?y < 1990) } ";
+					String queryString6 = "PREFIX gag: <http://geo.linkedopendata.gr/gag/ontology/> "
+							+ " SELECT ?official_region_name ?regional_unit_count ?official_regional_unit_name ?municipality_count"
+							+ " WHERE { ?regional_unit gag:ανήκει_σε ?region ."
+							+ "         ?region gag:έχει_επίσημο_όνομα ?official_region_name ."
+							+ "         ?regional_unit gag:έχει_επίσημο_όνομα ?official_regional_unit_name ."
+							+ "         {"
+							+ "           SELECT ?region (COUNT(?regional_unit) as ?regional_unit_count)"
+							+ "           WHERE { ?regional_unit rdf:type gag:Περιφερειακή_Ενότητα . "
+							+ "                   ?region rdf:type gag:Περιφέρεια . "
+							+ "                   ?regional_unit gag:ανήκει_σε ?region . }"
+							+ "           GROUP BY ?region "
+							+ "          } . "
+							+ "         {"
+							+ "           SELECT ?regional_unit (COUNT(?municipality) as ?municipality_count)"
+							+ "           WHERE { ?municipality rdf:type gag:Δήμος . "
+							+ "                   ?regional_unit rdf:type gag:Περιφερειακή_Ενότητα . "
+							+ "                   ?municipality gag:ανήκει_σε ?regional_unit . }"
+							+ "           GROUP BY ?regional_unit "
+							+ "          } . }"
+							+ "ORDER BY ?region";
 
-					String queryString7 = "prefix ns:   <http://zoi.gr/culture#>" + " SELECT ?x ?z ?w "
-							+ " WHERE { ?x   ns:paints  ?y ." + " OPTIONAL {?x ns:first_name ?z ."
-							+ "			?x ns:last_name ?w}} ";
+					String queryString7 = "PREFIX gag: <http://geo.linkedopendata.gr/gag/ontology/> "
+						    + " SELECT ?population ?sum_population ?parent_name"
+							+ " WHERE { ?parent_unit gag:έχει_πληθυσμό ?population . " 
+						    + "         ?parent_unit gag:έχει_επίσημο_όνομα ?parent_name . "
+					        + "         {"
+							+ "           SELECT ?parent_unit (SUM(?unit_population) as ?sum_population) "
+					        + "           WHERE { ?unit gag:ανήκει_σε ?parent_unit . "
+							+ "                   ?unit gag:έχει_πληθυσμό ?unit_population . "
+							+ "           } GROUP BY ?parent_unit } . "
+							+ "}";
 
-					String queryString8 = "prefix ns:   <http://zoi.gr/culture#>" + " SELECT ?x ?y "
-							+ " WHERE { {?x  ns:sculpts  ?y }" + " UNION {?x ns:paints ?y} } ";
+					String queryString8 = "PREFIX gag: <http://geo.linkedopendata.gr/gag/ontology/>"
+							+ "SELECT ?name "
+							+ "WHERE { ?x rdf:type gag:Χώρα ."
+					        + "        ?x rdfs:label ?name . }";
 
-					String queryString = queryString4;
+					String queryString = queryString7;
 					TupleQuery tupleQuery = con.prepareTupleQuery(QueryLanguage.SPARQL, queryString);
 					TupleQueryResult result = tupleQuery.evaluate();
 					System.out.println("Query:\n" + queryString);
