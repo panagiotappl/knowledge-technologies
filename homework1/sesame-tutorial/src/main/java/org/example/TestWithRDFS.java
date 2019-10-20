@@ -25,106 +25,83 @@ import org.openrdf.sail.memory.MemoryStore;
 
 public class TestWithRDFS {
 
-	static final String inputDataURL  = "file:///Users/gstam/Documents/eclipse-workspace/sesame-tutorial/culture_data.rdf";
-	static final String inputSchemaURL = "file:///Users/gstam/Documents/eclipse-workspace/sesame-tutorial/culture.rdfs";
-	
-	
-	public static void main(String[] args) {
+    static final String inputDataURL = "file:///home/giota/Documents/schema.nt";
+    // static final String inputSchemaURL =
+    // "file:///Users/gstam/Documents/eclipse-workspace/sesame-tutorial/culture.rdfs";
 
-		try {
-			//Create a new main memory repository 
-			MemoryStore store = new MemoryStore();
-			ForwardChainingRDFSInferencer inferencer = new ForwardChainingRDFSInferencer(store);
-			
-			Repository repo = new SailRepository(store);
-			//Repository repo = new SailRepository(inferencer);
-			repo.initialize();
+    public static void main(String[] args) {
 
-			//Store files (one local and one available through http)	
-			URL data = new URL(inputDataURL);
-			URL schema = new URL(inputSchemaURL);
-			String fileBaseURI = "http://zoi.gr/culture#";
-			RDFFormat fileRDFFormat = RDFFormat.N3;
-			RepositoryConnection con = repo.getConnection();
-			
-			//store the files
-			con.add(data, null, fileRDFFormat);
-			con.add(schema, fileBaseURI, fileRDFFormat);
-	
-			System.out.println("Repository loaded");
+	try {
+	    // Create a new main memory repository
+	    MemoryStore store = new MemoryStore();
+	    ForwardChainingRDFSInferencer inferencer = new ForwardChainingRDFSInferencer(store);
 
-			//Sesame supports:
-			//Tuple queries: queries that produce sets of value tuples.
-			//Graph queries: queries that produce RDF graphs
-			//Boolean queries: true/false queries			
-			
-			//Evaluate a SPARQL tuple query
-			String queryString1 = 
-				"PREFIX ns:   <http://zoi.gr/culture#> \n" +
-				" PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n" +
-				" SELECT ?x \n" +
-				" WHERE { ?x  rdfs:subClassOf*  ns:Artist  }";
-					
-			String queryString2 = "prefix ns:   <http://zoi.gr/culture#>" +
-				" PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>" +
-			 	" SELECT ?x " +
-			 	" WHERE { ?x  rdf:type  ns:Artist }" ;
-				        
-			String queryString3 = "prefix ns:   <http://zoi.gr/culture#>" +
-							" prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>" +
-							" prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>" +
-							"SELECT ?x WHERE { ?x  rdf:type  rdfs:Class }";
-				        
-			String queryString4 = "prefix ns:   <http://zoi.gr/culture#>" +
-							" prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>" +
-							" SELECT ?x " +
-							" WHERE { ?x  rdf:type  rdf:Property }";
-				        
+	    //Repository repo = new SailRepository(store);
+	    Repository repo = new SailRepository(inferencer);
+	    repo.initialize();
 
-			String queryString5 = "prefix ns:   <http://zoi.gr/culture#>" +
-				        " SELECT ?x ?y " +
-				        " WHERE { ?x  ns:creates  ?y } ";
-				        
-			String queryString6 = "prefix ns:   <http://zoi.gr/culture#>" +
-				        " SELECT ?x ?y " +
-				        " WHERE { ?x  ns:creates  ?y . " +
-				        " ?y ns:exhibited <http://www.louvre.fr/>} ";
-				                
-			String queryString7 = "prefix ns:   <http://zoi.gr/culture#>" +
-				        		" prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>" +
-				        " SELECT ?x WHERE { ?x  ns:created  ?y " +
-				        " FILTER (?y < 1990) . " +
-				        " ?x rdf:type ns:Artifact} ";
-				        
-			String queryString8 = "prefix ns:   <http://zoi.gr/culture#>" +
-						" prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>" +
-						" SELECT ?x ?y " +
-						" WHERE { ?x  ns:created  ?y " +
-						" FILTER (?y < 1990) . " +
-						" ?x rdf:type ns:Sculpture} ";
-					
-				      
-			String queryString = queryString2;
-			TupleQuery tupleQuery = con.prepareTupleQuery(QueryLanguage.SPARQL, queryString);
-			TupleQueryResult result = tupleQuery.evaluate();
-			System.out.println("Query:\n" + queryString);
-					
-			try {
-				//iterate the result set
-				while (result.hasNext()) {
-					BindingSet bindingSet = result.next();
-					System.out.println(bindingSet.toString());
-				}
+	    // Store files (one local and one available through http)
+	    URL data = new URL(inputDataURL);
+	    // URL schema = new URL(inputSchemaURL);
+	    // String fileBaseURI = "http://zoi.gr/culture#";
+	    RDFFormat fileRDFFormat = RDFFormat.NTRIPLES;
+	    RepositoryConnection con = repo.getConnection();
 
-				
-			} finally {
-						result.close();
-			}
-				
+	    // store the files
+	    con.add(data, null, fileRDFFormat);
+	    // con.add(schema, fileBaseURI, fileRDFFormat);
+
+	    System.out.println("Repository loaded");
+
+	    // Sesame supports:
+	    // Tuple queries: queries that produce sets of value tuples.
+	    // Graph queries: queries that produce RDF graphs
+	    // Boolean queries: true/false queries
+
+	    // Evaluate a SPARQL tuple query
+	    String queryString1 = "PREFIX ns:  <http://schema.org/> "
+		    + " PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> "
+		    + " SELECT ?x "
+		    + " WHERE { ?x  rdfs:subClassOf  ns:Place  }";
+
+	    String queryString2 = "PREFIX ns:  <http://schema.org/> "
+		    + " PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> "
+		    + " SELECT ?x "
+		    + " WHERE { ns:Place  rdfs:subClassOf  ?x  }";
+
+	    String queryString3 = "PREFIX ns: <http://schema.org/> "
+		    + " PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> "
+		    + " prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>"
+		    + " SELECT DISTINCT ?property "
+		    + " WHERE { ?property  rdf:type  rdf:Property . "
+		    + "         ?place rdf:type rdfs:Class . "
+		    + "         ?property ns:domainIncludes ?place . }";
+		    
+		 
+	    String queryString4 = "PREFIX ns:  <http://schema.org/> "
+		    + " PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> "
+		    + " SELECT DISTINCT ?x "
+		    + " WHERE { { ?x  rdfs:subClassOf ns:Thing } UNION { ?subClassOfThing rdfs:subClassOf ns:Thing . ?x  rdfs:subClassOf ?subClassOfThing. } }";
+
+	    String queryString = queryString3;
+	    TupleQuery tupleQuery = con.prepareTupleQuery(QueryLanguage.SPARQL, queryString);
+	    TupleQueryResult result = tupleQuery.evaluate();
+	    System.out.println("Query:\n" + queryString);
+
+	    try {
+		// iterate the result set
+		while (result.hasNext()) {
+		    BindingSet bindingSet = result.next();
+		    System.out.println(bindingSet.toString());
 		}
-		catch (Exception e) {
-			// handle exception
-			e.printStackTrace();
-		}
+
+	    } finally {
+		result.close();
+	    }
+
+	} catch (Exception e) {
+	    // handle exception
+	    e.printStackTrace();
 	}
+    }
 }
