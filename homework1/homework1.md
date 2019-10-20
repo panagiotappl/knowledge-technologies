@@ -166,7 +166,17 @@ GROUP BY ?official_d_name
 Results:
 All the decentralized
 
-### Exersise 4 (Schema.org)
+### Exercise 3 (linkedopendata & geonames)
+* Find all information that Geonames has for “Dimos Chania” (you have to use
+only Geonames here, not the Kallikratis dataset).
+```SQL
+PREFIX gn:<http://www.geonames.org/ontology#>
+SELECT ?property ?value
+WHERE { ?x ?property ?value .
+        ?x geonames:name "Dimos Chania".
+}
+```
+### Exercise 4 (Schema.org)
 
 #### With Inferencing
 
@@ -211,3 +221,13 @@ WHERE {
       }
 
 ```
+### Without Inferencing
+
+* Find all subclasses of class Place (note that http://schema.org/ prefers to
+use the equivalent term “type” for “class”).
+
+```SQL
+PREFIX ns:  <http://schema.org/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT ?x
+WHERE { ?x  rdfs:subClassOf*  ns:Place  }

@@ -36,8 +36,8 @@ public class TestWithRDFS {
 	    MemoryStore store = new MemoryStore();
 	    ForwardChainingRDFSInferencer inferencer = new ForwardChainingRDFSInferencer(store);
 
-	    //Repository repo = new SailRepository(store);
-	    Repository repo = new SailRepository(inferencer);
+	    Repository repo = new SailRepository(store);
+	    //Repository repo = new SailRepository(inferencer);
 	    repo.initialize();
 
 	    // Store files (one local and one available through http)
@@ -83,7 +83,7 @@ public class TestWithRDFS {
 		    + " SELECT DISTINCT ?x "
 		    + " WHERE { { ?x  rdfs:subClassOf ns:Thing } UNION { ?subClassOfThing rdfs:subClassOf ns:Thing . ?x  rdfs:subClassOf ?subClassOfThing. } }";
 
-	    String queryString = queryString3;
+	    String queryString = queryString1;
 	    TupleQuery tupleQuery = con.prepareTupleQuery(QueryLanguage.SPARQL, queryString);
 	    TupleQueryResult result = tupleQuery.evaluate();
 	    System.out.println("Query:\n" + queryString);
