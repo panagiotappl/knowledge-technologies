@@ -146,7 +146,7 @@ public class TestData {
 			    + "        FILTER(?regional_unit2 != ?regional_unit3) }"
 			    + "GROUP BY ?official_d_name";
 
-		    String queryString = queryString8;
+		    String queryString = queryString3;
 		    TupleQuery tupleQuery = con.prepareTupleQuery(QueryLanguage.SPARQL, queryString);
 		    TupleQueryResult result = tupleQuery.evaluate();
 		    System.out.println("Query:\n" + queryString);

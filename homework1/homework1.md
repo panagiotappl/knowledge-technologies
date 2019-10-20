@@ -455,15 +455,31 @@ WHERE { ?region rdf:type gag:Περιφέρεια .
         ?regional_unit gag:ανήκει_σε ?region .
         ?municipality gag:ανήκει_σε ?regional_unit .
         ?municipality gag:έχει_πληθυσμό ?population .
-        FILTER(?population < 5000)
+        FILTER(?population > 5000)
         ?municipality gag:έχει_επίσημο_όνομα ?official_municipality_name .}
 ```
 Results:
 ```
-[official_municipality_name="ΔΗΜΟΣ ΟΡΟΠΕΔΙΟΥ ΛΑΣΙΘΙΟΥ";population="3152"^^<http://www.w3.org/2001/XMLSchema#integer>]
-[official_municipality_name="ΔΗΜΟΣ ΣΦΑΚΙΩΝ";population="2446"^^<http://www.w3.org/2001/XMLSchema#integer>]
-[official_municipality_name="ΔΗΜΟΣ ΓΑΥΔΟΥ";population="98"^^<http://www.w3.org/2001/XMLSchema#integer>]
-[official_municipality_name="ΔΗΜΟΣ ΑΝΩΓΕΙΩΝ";population="2507"^^<http://www.w3.org/2001/XMLSchema#integer>]
+[official_municipality_name="ΔΗΜΟΣ ΑΓΙΟΥ ΝΙΚΟΛΑΟΥ";population="26227"^^<http://www.w3.org/2001/XMLSchema#integer>]
+[official_municipality_name="ΔΗΜΟΣ ΣΗΤΕΙΑΣ";population="19029"^^<http://www.w3.org/2001/XMLSchema#integer>]
+[official_municipality_name="ΔΗΜΟΣ ΙΕΡΑΠΕΤΡΑΣ";population="27911"^^<http://www.w3.org/2001/XMLSchema#integer>]
+[official_municipality_name="ΔΗΜΟΣ ΑΡΧΑΝΩΝ - ΑΣΤΕΡΟΥΣΙΩΝ";population="14503"^^<http://www.w3.org/2001/XMLSchema#integer>]
+[official_municipality_name="ΔΗΜΟΣ ΜΑΛΕΒΙΖΙΟΥ";population="20159"^^<http://www.w3.org/2001/XMLSchema#integer>]
+[official_municipality_name="ΔΗΜΟΣ ΦΑΙΣΤΟΥ";population="24228"^^<http://www.w3.org/2001/XMLSchema#integer>]
+[official_municipality_name="ΔΗΜΟΣ ΜΙΝΩΑ ΠΕΔΙΑΔΑΣ";population="20332"^^<http://www.w3.org/2001/XMLSchema#integer>]
+[official_municipality_name="ΔΗΜΟΣ ΗΡΑΚΛΕΙΟΥ";population="132361"^^<http://www.w3.org/2001/XMLSchema#integer>]
+[official_municipality_name="ΔΗΜΟΣ ΒΙΑΝΝΟΥ";population="6463"^^<http://www.w3.org/2001/XMLSchema#integer>]
+[official_municipality_name="ΔΗΜΟΣ ΓΟΡΤΥΝΑΣ";population="18264"^^<http://www.w3.org/2001/XMLSchema#integer>]
+[official_municipality_name="ΔΗΜΟΣ ΧΕΡΣΟΝΗΣΟΥ";population="22708"^^<http://www.w3.org/2001/XMLSchema#integer>]
+[official_municipality_name="ΔΗΜΟΣ ΠΛΑΤΑΝΙΑ";population="18622"^^<http://www.w3.org/2001/XMLSchema#integer>]
+[official_municipality_name="ΔΗΜΟΣ ΚΙΣΣΑΜΟΥ";population="11820"^^<http://www.w3.org/2001/XMLSchema#integer>]
+[official_municipality_name="ΔΗΜΟΣ ΧΑΝΙΩΝ";population="95456"^^<http://www.w3.org/2001/XMLSchema#integer>]
+[official_municipality_name="ΔΗΜΟΣ ΑΠΟΚΟΡΩΝΟΥ";population="12703"^^<http://www.w3.org/2001/XMLSchema#integer>]
+[official_municipality_name="ΔΗΜΟΣ ΚΑΝΤΑΝΟΥ - ΣΕΛΙΝΟΥ";population="7334"^^<http://www.w3.org/2001/XMLSchema#integer>]
+[official_municipality_name="ΔΗΜΟΣ ΡΕΘΥΜΝΗΣ";population="46558"^^<http://www.w3.org/2001/XMLSchema#integer>]
+[official_municipality_name="ΔΗΜΟΣ ΑΜΑΡΙΟΥ";population="6215"^^<http://www.w3.org/2001/XMLSchema#integer>]
+[official_municipality_name="ΔΗΜΟΣ ΑΓΙΟΥ ΒΑΣΙΛΕΙΟΥ";population="10079"^^<http://www.w3.org/2001/XMLSchema#integer>]
+[official_municipality_name="ΔΗΜΟΣ ΜΥΛΟΠΟΤΑΜΟΥ";population="15092"^^<http://www.w3.org/2001/XMLSchema#integer>]
 ```
 * For each municipality of Crete for which we have no seat (έδρα) information in the dataset, give its official name.
 ```SQL
@@ -1067,3 +1083,22 @@ Results:
 [parent_name="ΑΠΟΚΕΝΤΡΩΜΕΝΗ ΔΙΟΙΚΗΣΗ ΚΡΗΤΗΣ";sum_population="564267"^^<http://www.w3.org/2001/XMLSchema#integer>;population="564267"^^<http://www.w3.org/2001/XMLSchema#integer>]
 
 ```
+* Give the decentralized administrations (αποκεντρωμένες διοικήςεις) of Greece that consist of more than two regional units. (You cannot use SPARQL 1.1 aggregate operators to express this query.)
+
+```SQL
+PREFIX gag: <http://geo.linkedopendata.gr/gag/ontology/>
+SELECT ?official_d_name
+WHERE { ?d rdf:type gag:Αποκεντρωμένη_Διοίκηση .
+        ?d gag:έχει_επίσημο_όνομα ?official_d_name .
+        ?regional_unit1 rdf:type gag:Περιφερειακή_Ενότητα .
+        ?regional_unit1 gag:ανήκει_σε+ ?d .
+        ?regional_unit2 rdf:type gag:Περιφερειακή_Ενότητα .
+        ?regional_unit2 gag:ανήκει_σε+ ?d .
+        ?regional_unit3 rdf:type gag:Περιφερειακή_Ενότητα .
+        ?regional_unit3 gag:ανήκει_σε+ ?d .
+        FILTER(?regional_unit1 != ?regional_unit2)
+        FILTER(?regional_unit2 != ?regional_unit3) }
+GROUP BY ?official_d_name
+```
+Results:
+All the decentralized
