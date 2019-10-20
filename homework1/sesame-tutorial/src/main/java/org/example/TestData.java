@@ -143,10 +143,11 @@ public class TestData {
 			    + "        ?regional_unit3 rdf:type gag:Περιφερειακή_Ενότητα . "
 			    + "        ?regional_unit3 gag:ανήκει_σε+ ?d . " 
 			    + "        FILTER(?regional_unit1 != ?regional_unit2) "
-			    + "        FILTER(?regional_unit2 != ?regional_unit3) }"
+			    + "        FILTER(?regional_unit2 != ?regional_unit3) "
+			    + "        FILTER(?regional_unit3 != ?regional_unit1) }"
 			    + "GROUP BY ?official_d_name";
 
-		    String queryString = queryString3;
+		    String queryString = queryString8;
 		    TupleQuery tupleQuery = con.prepareTupleQuery(QueryLanguage.SPARQL, queryString);
 		    TupleQueryResult result = tupleQuery.evaluate();
 		    System.out.println("Query:\n" + queryString);
