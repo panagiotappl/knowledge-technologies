@@ -176,6 +176,24 @@ WHERE { ?x ?property ?value .
         ?x geonames:name "Dimos Chania".
 }
 ```
+
+* For every municipality of the region of Crete according to Kallikratis, find 
+its population and its population given by Geonames. Is the population 
+information in the two datasets the same? Discuss the quality of the results.
+```SQL
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX gag: <http://geo.linkedopendata.gr/gag/ontology/>
+PREFIX geonames:<http://www.geonames.org/ontology#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+
+SELECT ?nameK ?populationK ?populationG
+WHERE { ?municipalityK rdf:type gag:Δήμος .
+        ?municipalityK gag:έχει_επίσημο_όνομα ?nameK . 
+        ?municipalityK gag:έχει_πληθυσμό ?populationK .
+        ?municipalityK owl:sameAs ?municipalityG .
+        ?municipalityG geonames:population ?populationG .
+}
+```
 ### Exercise 4 (Schema.org)
 
 #### With Inferencing
