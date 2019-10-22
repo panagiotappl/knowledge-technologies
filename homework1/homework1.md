@@ -176,6 +176,19 @@ WHERE { ?x ?property ?value .
         ?x geonames:name "Dimos Chania".
 }
 ```
+* Find all information held by Geonames for municipalities in the regional unit
+of Chania (περιφερειακή ενότητα Χανίων).
+```SQL  
+SELECT  ?name ?property ?value
+WHERE { ?chania gag:έχει_επίσημο_όνομα "ΠΕΡΙΦΕΡΕΙΑΚΗ ΕΝΟΤΗΤΑ ΧΑΝΙΩΝ" .
+        ?munK gag:ανήκει_σε ?chania .
+        ?munK rdf:type gag:Δήμος .
+        ?munK owl:sameAs ?munG .
+        ?munG geonames:name ?name .
+        ?munG ?property ?value .
+} ORDER BY ?name
+
+```
 
 * For every municipality of the region of Crete according to Kallikratis, find
 its population and its population given by Geonames. Is the population
@@ -194,6 +207,34 @@ WHERE { ?municipalityK rdf:type gag:Δήμος .
         ?municipalityG geonames:population ?populationG .
 }
 ```
+
+* What kind of hierarchical administrative information for Greece is provided by
+Geonames and how does it compare to the Kallikratis dataset? Explain your
+answer using appropriate SPARQL queries on the joint datasets and their
+results.
+
+Kallikratis:
+```SQL  
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX gag: <http://geo.linkedopendata.gr/gag/ontology/>
+
+SELECT  ?unit
+WHERE { ?unit rdfs:subClassOf gag:Διοικητική_Μονάδα . }
+```
+
+Geonames:
+```SQL
+PREFIX geonames:<http://www.geonames.org/ontology#>
+
+SELECT  DISTINCT ?featureCode
+WHERE { ?x geonames:countryCode "GR" .
+        ?x geonames:featureClass geonames:A .
+        ?x geonames:featureCode ?featureCode .}
+```  
+
+Kallikratis results are personalized to Greece (Δήμος, Περιφέρεια etc) compared
+to geonames results where divisions have a more generic meaning and name
+(first order, second order etc).
 ### Exercise 4 (Schema.org)
 
 #### With Inferencing
