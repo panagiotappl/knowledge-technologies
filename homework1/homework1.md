@@ -177,8 +177,8 @@ WHERE { ?x ?property ?value .
 }
 ```
 
-* For every municipality of the region of Crete according to Kallikratis, find 
-its population and its population given by Geonames. Is the population 
+* For every municipality of the region of Crete according to Kallikratis, find
+its population and its population given by Geonames. Is the population
 information in the two datasets the same? Discuss the quality of the results.
 ```SQL
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -188,7 +188,7 @@ PREFIX owl: <http://www.w3.org/2002/07/owl#>
 
 SELECT ?nameK ?populationK ?populationG
 WHERE { ?municipalityK rdf:type gag:Δήμος .
-        ?municipalityK gag:έχει_επίσημο_όνομα ?nameK . 
+        ?municipalityK gag:έχει_επίσημο_όνομα ?nameK .
         ?municipalityK gag:έχει_πληθυσμό ?populationK .
         ?municipalityK owl:sameAs ?municipalityG .
         ?municipalityG geonames:population ?populationG .
@@ -217,10 +217,10 @@ WHERE { ns:Place  rdfs:subClassOf  ?x  }
 * Find all properties defined for the class Place together with all the
 properties inherited from its superclasses.
 ```SQL
-PREFIX ns: <http://schema.org/> "
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> "
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>"
-SELECT DISTINCT ?property "
+PREFIX ns: <http://schema.org/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+SELECT DISTINCT ?property
 WHERE { ?property  rdf:type  rdf:Property .
         ?place rdf:type rdfs:Class .
         ?property ns:domainIncludes ?place . }
@@ -239,7 +239,7 @@ WHERE {
       }
 
 ```
-### Without Inferencing
+#### Without Inferencing
 
 * Find all subclasses of class Place (note that http://schema.org/ prefers to
 use the equivalent term “type” for “class”).
@@ -249,3 +249,35 @@ PREFIX ns:  <http://schema.org/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 SELECT ?x
 WHERE { ?x  rdfs:subClassOf*  ns:Place  }
+```
+* Find all the superclasses of class Place.
+```SQL
+PREFIX ns:  <http://schema.org/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT ?x
+WHERE { ns:Place  rdfs:subClassOf*  ?x  }  
+```
+* Find all properties defined for the class Place together with all the
+properties inherited from its superclasses.
+```SQL
+PREFIX ns: <http://schema.org/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#
+SELECT DISTINCT ?property
+WHERE { ?property  rdf:type  rdf:Property .
+        ?place rdf:type rdfs:Class .
+        ?property ns:domainIncludes ?place . }
+```
+* Find all classes that are subclasses of class Thing and are found in at most 2
+levels of subclass relationships away from Thing.
+```SQL  
+PREFIX ns:  <http://schema.org/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT DISTINCT ?x
+WHERE {
+        { ?x  rdfs:subClassOf ns:Thing }
+        UNION
+        { ?subClassOfThing rdfs:subClassOf ns:Thing .
+          ?x  rdfs:subClassOf ?subClassOfThing. }
+      }
+```

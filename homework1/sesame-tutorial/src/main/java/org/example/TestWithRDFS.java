@@ -62,12 +62,12 @@ public class TestWithRDFS {
 	    String queryString1 = "PREFIX ns:  <http://schema.org/> "
 		    + " PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> "
 		    + " SELECT ?x "
-		    + " WHERE { ?x  rdfs:subClassOf  ns:Place  }";
+		    + " WHERE { ?x  rdfs:subClassOf*  ns:Place  }";
 
 	    String queryString2 = "PREFIX ns:  <http://schema.org/> "
 		    + " PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> "
 		    + " SELECT ?x "
-		    + " WHERE { ns:Place  rdfs:subClassOf  ?x  }";
+		    + " WHERE { ns:Place  rdfs:subClassOf*  ?x  }";
 
 	    String queryString3 = "PREFIX ns: <http://schema.org/> "
 		    + " PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> "
@@ -81,9 +81,9 @@ public class TestWithRDFS {
 	    String queryString4 = "PREFIX ns:  <http://schema.org/> "
 		    + " PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> "
 		    + " SELECT DISTINCT ?x "
-		    + " WHERE { { ?x  rdfs:subClassOf ns:Thing } UNION { ?subClassOfThing rdfs:subClassOf ns:Thing . ?x  rdfs:subClassOf ?subClassOfThing. } }";
+		    + " WHERE { { ?x  rdfs:subClassOf* ns:Thing } UNION { ?subClassOfThing rdfs:subClassOf* ns:Thing . ?x  rdfs:subClassOf* ?subClassOfThing. } }";
 
-	    String queryString = queryString1;
+	    String queryString = queryString4;
 	    TupleQuery tupleQuery = con.prepareTupleQuery(QueryLanguage.SPARQL, queryString);
 	    TupleQueryResult result = tupleQuery.evaluate();
 	    System.out.println("Query:\n" + queryString);
