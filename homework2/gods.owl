@@ -1,0 +1,180 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://www.semanticweb.org/giota/ontologies/2019/10/greekgods.owl#"
+     xml:base="http://www.semanticweb.org/giota/ontologies/2019/10/greekgods.owl"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+    <owl:Ontology rdf:about="http://www.semanticweb.org/giota/ontologies/2019/10/greekgods.owl"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/giota/ontologies/2019/10/greekgods.owl#hasChild -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/giota/ontologies/2019/10/greekgods.owl#hasChild">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/giota/ontologies/2019/10/greekgods.owl#hasParent"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/giota/ontologies/2019/10/greekgods.owl#hasParent -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/giota/ontologies/2019/10/greekgods.owl#hasParent"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/giota/ontologies/2019/10/greekgods.owl#Beautiful -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/giota/ontologies/2019/10/greekgods.owl#Beautiful">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/giota/ontologies/2019/10/greekgods.owl#Successful"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/giota/ontologies/2019/10/greekgods.owl#Child -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/giota/ontologies/2019/10/greekgods.owl#Child">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/giota/ontologies/2019/10/greekgods.owl#Person"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/giota/ontologies/2019/10/greekgods.owl#Happy -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/giota/ontologies/2019/10/greekgods.owl#Happy">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/giota/ontologies/2019/10/greekgods.owl#Person"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/giota/ontologies/2019/10/greekgods.owl#Parent -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/giota/ontologies/2019/10/greekgods.owl#Parent">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/giota/ontologies/2019/10/greekgods.owl#Person"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/giota/ontologies/2019/10/greekgods.owl#Person -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/giota/ontologies/2019/10/greekgods.owl#Person"/>
+    
+
+
+    <!-- http://www.semanticweb.org/giota/ontologies/2019/10/greekgods.owl#Successful -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/giota/ontologies/2019/10/greekgods.owl#Successful">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/giota/ontologies/2019/10/greekgods.owl#Person"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/giota/ontologies/2019/10/greekgods.owl#Ugly -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/giota/ontologies/2019/10/greekgods.owl#Ugly">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/giota/ontologies/2019/10/greekgods.owl#Person"/>
+    </owl:Class>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/giota/ontologies/2019/10/greekgods.owl#Aphrodite -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/giota/ontologies/2019/10/greekgods.owl#Aphrodite">
+        <rdf:type rdf:resource="http://www.semanticweb.org/giota/ontologies/2019/10/greekgods.owl#Beautiful"/>
+        <rdf:type rdf:resource="http://www.semanticweb.org/giota/ontologies/2019/10/greekgods.owl#Parent"/>
+        <rdf:type rdf:resource="http://www.semanticweb.org/giota/ontologies/2019/10/greekgods.owl#Person"/>
+        <hasChild rdf:resource="http://www.semanticweb.org/giota/ontologies/2019/10/greekgods.owl#Eros"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/giota/ontologies/2019/10/greekgods.owl#Eros -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/giota/ontologies/2019/10/greekgods.owl#Eros">
+        <rdf:type rdf:resource="http://www.semanticweb.org/giota/ontologies/2019/10/greekgods.owl#Child"/>
+        <rdf:type rdf:resource="http://www.semanticweb.org/giota/ontologies/2019/10/greekgods.owl#Person"/>
+        <hasParent rdf:resource="http://www.semanticweb.org/giota/ontologies/2019/10/greekgods.owl#Aphrodite"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // General axioms
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    <owl:Restriction>
+        <owl:onProperty rdf:resource="http://www.semanticweb.org/giota/ontologies/2019/10/greekgods.owl#hasParent"/>
+        <owl:someValuesFrom>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.semanticweb.org/giota/ontologies/2019/10/greekgods.owl#Beautiful"/>
+                    <rdf:Description rdf:about="http://www.semanticweb.org/giota/ontologies/2019/10/greekgods.owl#Person"/>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:someValuesFrom>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/giota/ontologies/2019/10/greekgods.owl#Beautiful"/>
+    </owl:Restriction>
+    <owl:Restriction>
+        <owl:onProperty rdf:resource="http://www.semanticweb.org/giota/ontologies/2019/10/greekgods.owl#hasParent"/>
+        <owl:someValuesFrom>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.semanticweb.org/giota/ontologies/2019/10/greekgods.owl#Person"/>
+                    <owl:Class>
+                        <owl:complementOf rdf:resource="http://www.semanticweb.org/giota/ontologies/2019/10/greekgods.owl#Beautiful"/>
+                    </owl:Class>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:someValuesFrom>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/giota/ontologies/2019/10/greekgods.owl#Ugly"/>
+    </owl:Restriction>
+    <owl:Restriction>
+        <owl:onProperty rdf:resource="http://www.semanticweb.org/giota/ontologies/2019/10/greekgods.owl#hasChild"/>
+        <owl:allValuesFrom rdf:resource="http://www.semanticweb.org/giota/ontologies/2019/10/greekgods.owl#Successful"/>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/giota/ontologies/2019/10/greekgods.owl#Happy"/>
+    </owl:Restriction>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi -->
+
